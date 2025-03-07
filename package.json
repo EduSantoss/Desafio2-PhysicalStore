@@ -2,17 +2,24 @@
   "name": "desafio2--physical-store",
   "version": "1.0.0",
   "description": "-> O projeto é a criação de um Physical Store que irá conter as lojas de uma determinada loja eCommerce.",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "nodemon dist/index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.8.2",
+    "desafio2--physical-store": "file:",
     "express": "^4.21.2"
   },
   "devDependencies": {
-    "nodemon": "^3.1.9"
+    "@types/axios": "^0.14.4",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.9",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
   }
 }
