@@ -10,9 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/mongoose": "^5.11.97",
     "axios": "^1.8.2",
     "desafio2--physical-store": "file:",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "mongoose": "^8.12.1"
   },
   "devDependencies": {
     "@types/axios": "^0.14.4",

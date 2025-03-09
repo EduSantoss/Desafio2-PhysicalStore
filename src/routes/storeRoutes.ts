@@ -1,9 +1,11 @@
 import { Router } from "express";
-import { createStore, getStore, updateStore} from "../controllers/storeController";
+import { getStore} from "../controllers/storeController";
 
 
 //////////////////////// ROUTES ////////////////////////
 
-const router = Router(); // Por padrão de escrita, interessante mudar o nome para router
+const router = Router(); 
+
+router.get('/', getStore);
 
 export default router 

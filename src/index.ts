@@ -1,9 +1,12 @@
 import express, { RequestHandler} from "express";
+import { connectDB } from "./config/database";
 import storeRoutes from "./routes/storeRoutes";
 // import locationRoutes from "./routes/locationRoutes";
 
 const app = express();
 const port = 3000; 
+
+connectDB();
 
 /////////////////////// MIDDLEWARES ////////////////////////
 
