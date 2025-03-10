@@ -6,10 +6,7 @@ interface Location {
   lon: number;
 }
 
-/**
- * @param cep 
- * @returns  ////// Retornar um objeto, junto com sua latitude e longitude. ////////
-*/
+///////////// Retornar um objeto, junto com sua latitude e longitude. ///////////
 export const getCoordinatesByCep = async (cep: string): Promise<Location | null> => {
   try {
     const response = await axios.get(`https://nominatim.openstreetmap.org/search`, {

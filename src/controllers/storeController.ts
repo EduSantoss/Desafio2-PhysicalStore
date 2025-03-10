@@ -37,7 +37,7 @@ export const getStores: RequestHandler = async (req, res): Promise<void> => {
 
     if (storesWithinRadius.length === 0) {
       logger.warn(`Nenhuma loja encontrada dentro do raio de ${radius}km para o CEP ${cep}`);
-      res.status(404).json({ message: "Nenhuma loja encontrada no raio especificado" });
+      res.status(404).json({ message: "Nenhuma loja encontrada dentro do raio especificado" });
       return;
     }
     logger.info(`Foram encontradas ${storesWithinRadius.length} lojas dentro do raio de ${radius}km para o CEP ${cep}`);
@@ -48,6 +48,19 @@ export const getStores: RequestHandler = async (req, res): Promise<void> => {
     res.status(500).json({ message: "Erro ao buscar lojas"});
     return;
   }
+};
+
+/////// Middleware para validar o CEP ////////////
+export const validateCep: RequestHandler = (req, res, next) => {
+  const { cep } = req.params;
+
+  if (!/^[0-9]{5}-?[0-9]{3}$/.test(cep)) {
+    logger.error(`O CEP informado é inválido:${cep}`)
+    res.status(400).json({ message: 'CEP inválido. O formato deve ser 00000-000 ou 00000000.' });
+    return
+  }
+
+  next();
 };
 
 //////  Middleware para extrair o raio da URL ///////////

@@ -11,10 +11,6 @@ interface CepResponse {
   erro?: boolean; 
 }
 
-/**
-  @param cep 
-  @returns 
- */
 export const getAddressByCep = async (cep: string): Promise<CepResponse | null> => {
   try {
     const response = await axios.get<CepResponse>(`https://viacep.com.br/ws/${cep}/json/`);
