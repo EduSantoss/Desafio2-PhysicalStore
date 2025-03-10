@@ -1,11 +1,10 @@
 import { Router } from "express";
-import { getStore} from "../controllers/storeController";
-
+import { getStores} from "../controllers/storeController";
 
 //////////////////////// ROUTES ////////////////////////
 
 const router = Router(); 
 
-router.get('/', getStore);
+router.get('/stores/:cep', getStores);
 
-export default router 
+export default router;
