@@ -1,12 +1,12 @@
 import { RequestHandler } from "express";
 import Store from "../models/storeModel";
 import { getCoordinatesByCep } from "../services/locationService";
+import logger from "../services/logger";
 
 const EARTH_RADIUS_KM = 6371;
-// TESTAR RADIUS PARA VER SE FUNCIONA, E CEP ERRADO, E NOME DIFERENTE DE LOJAS, BUSCA PELO NOME
-/**
- * ////////// Middleware para buscar as lojas, utilizando a formula de haversine. ///////////
- */
+
+
+////////// Middleware para buscar as lojas, utilizando a formula de haversine. ///////////
 export const getStores: RequestHandler = async (req, res): Promise<void> => {
   try {
     const { cep } = req.params;
@@ -14,7 +14,8 @@ export const getStores: RequestHandler = async (req, res): Promise<void> => {
 
     const userLocation = await getCoordinatesByCep(cep);
     if (!userLocation) {
-      res.status(400).json({ message: "CEP inválido ou não encontrado" });
+      logger.error(`CEP não encontrado: ${cep}`);
+      res.status(400).json({ message: "CEP não encontrado." });
       return; 
     }
 
@@ -35,13 +36,17 @@ export const getStores: RequestHandler = async (req, res): Promise<void> => {
       .sort((a, b) => a.distance - b.distance);
 
     if (storesWithinRadius.length === 0) {
+      logger.warn(`Nenhuma loja encontrada dentro do raio de ${radius}km para o CEP ${cep}`);
       res.status(404).json({ message: "Nenhuma loja encontrada no raio especificado" });
       return;
     }
-
+    logger.info(`Foram encontradas ${storesWithinRadius.length} lojas dentro do raio de ${radius}km para o CEP ${cep}`);
     res.json(storesWithinRadius);
+    return;
   } catch (error) {
+    logger.error(`Erro ao buscar lojas: ${(error as Error).message}`);
     res.status(500).json({ message: "Erro ao buscar lojas"});
+    return;
   }
 };
 
