@@ -3,7 +3,7 @@ import Store from "../models/storeModel";
 import { getCoordinatesByCep } from "../services/locationService";
 
 const EARTH_RADIUS_KM = 6371;
-
+// TESTAR RADIUS PARA VER SE FUNCIONA, E CEP ERRADO, E NOME DIFERENTE DE LOJAS, BUSCA PELO NOME
 /**
  * ////////// Middleware para buscar as lojas, utilizando a formula de haversine. ///////////
  */
@@ -43,6 +43,18 @@ export const getStores: RequestHandler = async (req, res): Promise<void> => {
   } catch (error) {
     res.status(500).json({ message: "Erro ao buscar lojas"});
   }
+};
+
+//////  Middleware para extrair o raio da URL ///////////
+export const extractRadius: RequestHandler = (req, _res, next) => {
+  const radius = req.query.radius as string;
+  
+  if (radius) {
+    req.query.radius = radius; 
+  } else {
+    req.query.radius = '100'; 
+  }
+  next();
 };
 
  ///////////////  Formula de haversine ////////////////

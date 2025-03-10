@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { getStores} from "../controllers/storeController";
+import { getStores, extractRadius} from "../controllers/storeController";
 
 //////////////////////// ROUTES ////////////////////////
 
 const router = Router(); 
 
-router.get('/stores/:cep', getStores);
+router.route('/:cep').get(extractRadius, getStores );
 
 export default router;
